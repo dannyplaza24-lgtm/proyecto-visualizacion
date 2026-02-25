@@ -28,7 +28,15 @@ alt.Chart(df).mark_boxplot().encode(
     title='Distribución de Masa Corporal por Especie e Isla'
 )
 ```
-En esta visualización, podemos observar cómo varía la masa corporal de los pingüinos según su especie y la isla en la que se encuentran. Cada caja representa la distribución de masa corporal para una combinación específica de especie e isla, lo que nos permite comparar fácilmente entre grupos.
+El recurso adecuado para evaluar la distribuciónde una variable cuantitativa (masa corporal) segmentada por grupos categóricos es el Diagrama de caja (Boxplot). Este tipo de gráfico muestra la mediana, los cuartiles y los posibles valores atípicos, lo que facilita la comparación entre las diferentes especies de pingüinos y las islas donde se encuentran sin sobrecargar una misma visualización.
+
+Análisis visual:
+
+Los pingüinos Gentoo registran la mayor masa corporal (mediana cercana a los 5000 g) y se encuentran exclusivamente en la isla Biscoe.
+
+Los pingüinos Adelie presentan la menor masa corporal y tienen una distribución de peso bastante estable y similar a través de las tres islas (Biscoe, Dream y Torgersen).
+
+Los pingüinos Chinstrap tienen una masa corporal comparable a la de los Adelie y se ubican únicamente en la isla Dream.
 ```{python}
 alt.Chart(df).mark_rect().encode(
     x=alt.X('island:N', title='Isla'),
@@ -38,7 +46,15 @@ alt.Chart(df).mark_rect().encode(
     title='Presencia de Especies por Isla'
 )
 ```
-En esta visualización, utilizamos un gráfico de calor para mostrar la cantidad de pingüinos de cada especie presentes en cada isla. Las celdas más oscuras indican una mayor cantidad de pingüinos, lo que nos permite identificar rápidamente qué especies son más comunes en cada isla.
+Al utilizar el Mapa de calor con marcas rectangulares codificadas por intensidad de color según el conteo, se puede identificar asociaciones entre categorías de forma muy compacta y evidenciar espacios en blanco donde la intersección es nula.
+
+Interpretación:
+
+Adelie: Es la única especie distribuida de forma general, presente en las tres islas (Biscoe, Dream y Torgersen).
+
+Gentoo: Es una especie exclusiva de la isla Biscoe.
+
+Chinstrap: Es una especie exclusiva de la isla Dream.
 ```{python}
 df_sexo_limpio = df[df['sex'].isin(['MALE', 'FEMALE'])]
 
@@ -50,4 +66,8 @@ alt.Chart(df_sexo_limpio).mark_boxplot().encode(
     title='Diferencia en la Longitud del Pico entre Sexos'
 )
 ```
-En esta visualización, comparamos la longitud del pico de los pingüinos entre machos y hembras utilizando un gráfico de caja. Esto nos permite observar si hay diferencias significativas en la longitud del pico entre los dos sexos, lo que podría estar relacionado con sus roles en la reproducción o alimentación.
+Variable cuantitativa elegida: Longitud del pico (culmen_length_mm).
+
+Justificación del gráfico: En este caso un diagrama de caja permite comparar la distribución de una variable cuantitativa entre dos categorías (machos y hembras).
+
+Diferencias notables: Tras filtrar las categorías atípicas, la visualización confirma de manera consistente que los machos presentan una longitud de pico mayor (mediana superior) en comparación con las hembras.
