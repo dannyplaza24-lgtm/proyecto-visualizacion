@@ -1,0 +1,53 @@
+---
+title: "Participación en clase 2"
+author: "Jorge Sosa y Danny Plaza"
+execute:
+  warning: false
+---
+
+## Configuración inicial
+Cargamos las librerías necesarias y el dataset, eliminando los valores nulos para evitar problemas en las visualizaciones.
+
+```{python}
+import pandas as pd
+import altair as alt
+
+alt.renderers.enable('html')
+
+url = 'https://raw.githubusercontent.com/erickedu85/dataset/master/penguins.csv'
+df = pd.read_csv(url).dropna()
+```
+
+```{python}
+alt.Chart(df).mark_boxplot().encode(
+    x=alt.X('species:N', title='Especie'),
+    y=alt.Y('body_mass_g:Q', title='Masa Corporal (g)'),
+    color='species:N',
+    column=alt.Column('island:N', title='Isla')
+).properties(
+    title='Distribución de Masa Corporal por Especie e Isla'
+)
+```
+En esta visualización, podemos observar cómo varía la masa corporal de los pingüinos según su especie y la isla en la que se encuentran. Cada caja representa la distribución de masa corporal para una combinación específica de especie e isla, lo que nos permite comparar fácilmente entre grupos.
+```{python}
+alt.Chart(df).mark_rect().encode(
+    x=alt.X('island:N', title='Isla'),
+    y=alt.Y('species:N', title='Especie'),
+    color=alt.Color('count():Q', title='Cantidad de Pingüinos')
+).properties(
+    title='Presencia de Especies por Isla'
+)
+```
+En esta visualización, utilizamos un gráfico de calor para mostrar la cantidad de pingüinos de cada especie presentes en cada isla. Las celdas más oscuras indican una mayor cantidad de pingüinos, lo que nos permite identificar rápidamente qué especies son más comunes en cada isla.
+```{python}
+df_sexo_limpio = df[df['sex'].isin(['MALE', 'FEMALE'])]
+
+alt.Chart(df_sexo_limpio).mark_boxplot().encode(
+    x=alt.X('sex:N', title='Sexo'),
+    y=alt.Y('culmen_length_mm:Q', title='Longitud del Pico (mm)'),
+    color='sex:N'
+).properties(
+    title='Diferencia en la Longitud del Pico entre Sexos'
+)
+```
+En esta visualización, comparamos la longitud del pico de los pingüinos entre machos y hembras utilizando un gráfico de caja. Esto nos permite observar si hay diferencias significativas en la longitud del pico entre los dos sexos, lo que podría estar relacionado con sus roles en la reproducción o alimentación.
